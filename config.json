@@ -1,0 +1,41 @@
+{
+  "dataset_reader": {
+    "type": "issue_reader_siamese"
+  },
+  "train_data_path": "#the path of train_data",
+  "validation_data_path": "#the path of validation_data",
+  "random_seed": 42,
+  "numpy_seed": 42,
+  "pytorch_seed": 42,
+  "model": {
+    "type": "FRModel",
+    "text_field_embedder": {
+      "tokens": {
+        "type": "embedding",
+        "embedding_dim": 100,
+        "trainable": true,
+        "pretrained_file": "#the path of pretrained word embedding file"
+      }
+    }
+  },
+  "iterator": {
+    "type": "custom_iterator",
+    "batch_size": 64,
+    "sorting_keys": [
+      ["dialog2", "num_fields"]
+    ]
+  },
+  "trainer": {
+    "optimizer": {
+      "type": "adam",
+      "lr": 1e-4,
+      "weight_decay":1e-4
+    },
+    "validation_metric": "+s_fmeasure",
+    "num_epochs": 100,
+    "patience": 10,
+    "cuda_device": 0
+  }
+}
+
+
